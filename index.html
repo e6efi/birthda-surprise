@@ -197,9 +197,9 @@
     <!-- 🌌 السماء والنجوم -->
     <div class="stars" id="starsContainer"></div>
 
-    <!-- 🎵 الموسيقى -->
-    <audio id="bgMusic" loop preload="auto">
-        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a2b160.mp3?filename=happy-birthday-155461.mp3" type="audio/mpeg">
+    <!-- 🎵 عنصر الصوت المباشر والمضمون -->
+    <audio id="bgMusic" loop playsinline preload="auto">
+        <source src="https://actions.google.com/sounds/v1/holidays/happy_birthday.ogg" type="audio/ogg">
     </audio>
 
     <div class="container">
@@ -248,8 +248,12 @@
             const card = document.getElementById('card');
             const music = document.getElementById('bgMusic');
 
-            // تشغيل الصوت عند الضغط
-            music.play();
+            // تشغيل الموسيقى فور الضغط على الهدية
+            if (music) {
+                music.play().catch(function(e) {
+                    console.log("Audio playback error:", e);
+                });
+            }
 
             giftContainer.classList.add('open');
             hint.style.display = 'none';
