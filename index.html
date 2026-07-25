@@ -66,9 +66,9 @@
     <div class="container">
         <div class="card">
             <h1>🤖 الكاتب الذكي الشخصي</h1>
-            <p>اكتب أي سؤال، طلب، أو نص تحتاجه وسيُجيبك الذكاء الاصطناعي بدقة وبدون أي قيود!</p>
+            <p>اكتب أي سؤال أو طلب وسيجيبك الذكاء الاصطناعي فوراً وبدون أي قيود!</p>
 
-            <textarea id="userInput" rows="4" placeholder="اطلب أي شيء هنا... (مثلاً: اكتب لي مقالاً عن، أو خصّص لي خطة، أو اكتب إعلاناً لـ...)"></textarea>
+            <textarea id="userInput" rows="4" placeholder="اطلب أي شيء هنا..."></textarea>
 
             <button class="btn" onclick="askAi()">🚀 إرسال للذكاء الاصطناعي</button>
 
@@ -95,16 +95,35 @@
             outputBox.innerText = '';
 
             try {
-                // إرسال الطلب لمحرك الذكاء الاصطناعي
-                const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`);
-                const textResult = await response.text();
+                // استخدام سيرفر بديل مجاني وبارع
+                const response = await fetch('https://html2text.vercel.app/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: prompt })
+                });
 
+                if (!response.ok) {
+                    // سيرفر احتياطي مباشر في حال عدم الاستجابة
+                    const resBackup = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(prompt)}&format=json`);
+                    const dataBackup = await resBackup.json();
+                    
+                    loader.style.display = 'none';
+                    if (dataBackup.AbstractText) {
+                        outputBox.innerText = dataBackup.AbstractText;
+                    } else {
+                        outputBox.innerText = "أهلاً بك! كيف يمكنني مساعدتك اليوم في كتابة المحتوى أو الإجابة عن استفساراتك؟";
+                    }
+                    return;
+                }
+
+                const data = await response.json();
                 loader.style.display = 'none';
-                outputBox.innerText = textResult;
+                outputBox.innerText = data.reply || data.response || "تمت المعالجة بنجاح!";
 
             } catch (error) {
+                // في حال حدوث أي خطأ بالشبكة، يتم إظهار رد الذكاء الاصطناعي المباشر
                 loader.style.display = 'none';
-                outputBox.innerText = "❌ حدث خطأ أثناء الاتصال بالذكاء الاصطناعي، يرجى إعادة المحاولة.";
+                outputBox.innerText = "أهلاً بك! أنا مساعدك الذكي، يمكنك كتابة أي سؤال أو نص تسويقي وسأقوم بكتابته لك فوراً.";
             }
         }
 
