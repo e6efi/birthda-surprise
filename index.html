@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صانع الإعلانات والعروض السريعة 🛍️🚀</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <title>مساعدي الذكي الشخصي 🤖✨</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -15,164 +14,104 @@
             padding: 20px 10px;
         }
 
-        .container { width: 100%; max-width: 550px; }
+        .container { width: 100%; max-width: 600px; }
 
         .card {
-            background: rgba(30, 41, 59, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px); border-radius: 20px;
-            padding: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px); border-radius: 20px;
+            padding: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             text-align: center;
         }
 
         h1 {
             font-size: 1.8rem;
-            background: linear-gradient(135deg, #3b82f6, #10b981);
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px; }
 
-        input, select, textarea {
-            width: 100%; padding: 12px; border-radius: 12px;
+        textarea {
+            width: 100%; padding: 14px; border-radius: 12px;
             border: 1px solid #334155; background: #0f172a; color: #fff;
-            font-size: 0.95rem; margin-bottom: 12px; outline: none; font-family: inherit;
+            font-size: 1rem; margin-bottom: 12px; outline: none; font-family: inherit;
+            resize: vertical;
         }
+        textarea:focus { border-color: #38bdf8; }
 
         .btn {
             width: 100%; padding: 14px; border: none; border-radius: 12px;
             font-size: 1rem; font-weight: bold; cursor: pointer; color: #fff;
-            background: linear-gradient(135deg, #3b82f6, #10b981);
-            transition: transform 0.2s; margin-bottom: 10px;
+            background: linear-gradient(135deg, #0284c7, #6366f1);
+            transition: transform 0.2s, background 0.2s; margin-bottom: 10px;
         }
         .btn:active { transform: scale(0.98); }
 
-        .vip-btn { background: linear-gradient(135deg, #eab308, #ca8a04); color: #000; font-weight: 800; }
-
-        /* 🎨 البوستر الإعلاني المولد */
-        .poster-preview {
-            width: 100%; height: 320px; border-radius: 16px;
-            background: linear-gradient(135deg, #1e1b4b, #311042);
-            border: 2px solid #eab308; padding: 20px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            align-items: center; margin: 15px 0; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        .result-box {
+            background: #090d16; border: 1px solid #334155; border-radius: 12px;
+            padding: 16px; text-align: right; min-height: 140px; margin: 15px 0;
+            white-space: pre-line; line-height: 1.7; color: #f1f5f9; font-size: 1rem;
+            max-height: 400px; overflow-y: auto;
         }
 
-        .poster-tag { background: #ef4444; color: #fff; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; }
-        .poster-title { font-size: 1.8rem; font-weight: 900; color: #fff; margin: 10px 0; }
-        .poster-price { font-size: 1.4rem; color: #eab308; font-weight: bold; }
-        .old-price { text-decoration: line-through; color: #94a3b8; font-size: 1rem; margin-left: 8px; }
-        .watermark { font-size: 0.75rem; color: #64748b; margin-top: 5px; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .loader {
+            display: none; margin: 15px 0; color: #38bdf8; font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        
-        <!-- 1️⃣ شاشة إدخال بيانات العرض -->
-        <div id="formView" class="card">
-            <h1>🚀 صانع الإعلانات المباشر</h1>
-            <p>أدخل تفاصيل عرضك واحصل على نص تسويقي + بوستر جاهز للنشر بضغطة زر!</p>
+        <div class="card">
+            <h1>🤖 الكاتب الذكي الشخصي</h1>
+            <p>اكتب أي سؤال، طلب، أو نص تحتاجه وسيُجيبك الذكاء الاصطناعي بدقة وبدون أي قيود!</p>
 
-            <input type="text" id="prodName" placeholder="اسم المنتج (مثلاً: عطر الملكي 🌟)">
-            <input type="text" id="newPrice" placeholder="السعر بعد الخصم (مثلاً: 15,000 د.ع)">
-            <input type="text" id="oldPrice" placeholder="السعر القديم (اختياري، مثلاً: 25,000)">
+            <textarea id="userInput" rows="4" placeholder="اطلب أي شيء هنا... (مثلاً: اكتب لي مقالاً عن، أو خصّص لي خطة، أو اكتب إعلاناً لـ...)"></textarea>
+
+            <button class="btn" onclick="askAi()">🚀 إرسال للذكاء الاصطناعي</button>
+
+            <div id="loader" class="loader">⏳ جاري التفكير والكتابة...</div>
             
-            <select id="offerType">
-                <option value="🔥 خصم لفترة محدودة!">خصم لفترة محدودة 🔥</option>
-                <option value="🚚 التوصيل مجاني اليوم!">توصيل مجاني 🚚</option>
-                <option value="🎁 اشترِ واحد واحصل على الثاني مجاناً!">عرض 1+1 مجاناً 🎁</option>
-            </select>
-
-            <input type="text" id="vipCode" placeholder="🔑 كود VIP (لتحميل البوستر بدون علامة مائية)">
-
-            <button class="btn" onclick="generateAd()">✨ توليد الإعلان والبوستر</button>
-            <button class="btn vip-btn" onclick="buyVip()">👑 شراء كود VIP عبر التلغرام</button>
-        </div>
-
-        <!-- 2️⃣ شاشة العرض النتيجة والتنزيل -->
-        <div id="resultView" class="card" style="display: none;">
-            <h1>إعلانك جاهز! 🎉</h1>
-            
-            <!-- النص التسويقي -->
-            <textarea id="captionText" rows="4" readonly></textarea>
-            <button class="btn" onclick="copyCaption()" style="background: #334155;">📋 نسخ النص التسويقي</button>
-
-            <!-- البوستر المصمم -->
-            <div id="poster" class="poster-preview">
-                <div class="poster-tag" id="pTag">خصم خاص</div>
-                <div class="poster-title" id="pTitle">اسم المنتج</div>
-                <div>
-                    <span class="poster-price" id="pNewPrice">15,000</span>
-                    <span class="old-price" id="pOldPrice"></span>
-                </div>
-                <div class="watermark" id="pWatermark">تم الإنشاء بواسطة منصة الإعلانات السريعة</div>
+            <div id="resultArea" style="display: none;">
+                <div id="outputBox" class="result-box"></div>
+                <button class="btn" onclick="copyText()" style="background: #334155;">📋 نسخ النص</button>
             </div>
-
-            <button class="btn" onclick="downloadPoster()">📥 تنزيل البوستر كصورة</button>
-            <button class="btn" onclick="location.reload()" style="background: #1e293b; margin-top: 5px;">🔄 إنشاء إعلان جديد</button>
         </div>
-
     </div>
 
     <script>
-        const TELEGRAM_USERNAME = "e7efi"; 
-        const VALID_VIP_CODES = ["VIP2026", "PRO2026", "SHOP100"];
+        async function askAi() {
+            const prompt = document.getElementById('userInput').value.trim();
+            if (!prompt) return alert("يرجى كتابة سؤالك أو طلبك أولاً!");
 
-        function buyVip() {
-            window.open(`https://t.me/${TELEGRAM_USERNAME}?text=مرحباً،%20أريد%20شراء%20كود%20VIP%20لصانع%20الإعلانات!`, '_blank');
-        }
+            const loader = document.getElementById('loader');
+            const resultArea = document.getElementById('resultArea');
+            const outputBox = document.getElementById('outputBox');
 
-        function generateAd() {
-            const name = document.getElementById('prodName').value.trim();
-            const newPrice = document.getElementById('newPrice').value.trim();
-            const oldPrice = document.getElementById('oldPrice').value.trim();
-            const type = document.getElementById('offerType').value;
-            const code = document.getElementById('vipCode').value.trim().toUpperCase();
+            resultArea.style.display = 'block';
+            loader.style.display = 'block';
+            outputBox.innerText = '';
 
-            if (!name || !newPrice) return alert("يرجى كتابة اسم المنتج والسعر الجديد على الأقل!");
+            try {
+                // إرسال الطلب لمحرك الذكاء الاصطناعي
+                const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`);
+                const textResult = await response.text();
 
-            // 1. توليد النص
-            let caption = `${type}\n\n✨ ${name} ✨\n\n💰 السعر الآن: ${newPrice}`;
-            if (oldPrice) caption += ` (بدل ${oldPrice})`;
-            caption += `\n\n📦 للطلب والحجز، أرسل رسالة فورية للصفحة! 🚀\n#عروض #تسوق #خصومات`;
+                loader.style.display = 'none';
+                outputBox.innerText = textResult;
 
-            document.getElementById('captionText').value = caption;
-
-            // 2. توليد البوستر
-            document.getElementById('pTag').innerText = type;
-            document.getElementById('pTitle').innerText = name;
-            document.getElementById('pNewPrice').innerText = newPrice;
-            document.getElementById('pOldPrice').innerText = oldPrice ? oldPrice : '';
-
-            // فحص كود VIP لإزالة العلامة المائية
-            if (VALID_VIP_CODES.includes(code)) {
-                document.getElementById('pWatermark').innerText = "⭐ إعلان VIP محترف";
-            } else {
-                document.getElementById('pWatermark').innerText = "تم الإنشاء مجاناً عبر منصتنا (اشترِ كود VIP لإزالتها)";
+            } catch (error) {
+                loader.style.display = 'none';
+                outputBox.innerText = "❌ حدث خطأ أثناء الاتصال بالذكاء الاصطناعي، يرجى إعادة المحاولة.";
             }
-
-            document.getElementById('formView').style.display = 'none';
-            document.getElementById('resultView').style.display = 'block';
         }
 
-        function copyCaption() {
-            const copyText = document.getElementById("captionText");
-            copyText.select();
-            navigator.clipboard.writeText(copyText.value);
-            alert("📋 تم نسخ النص التسويقي بنجاح! يمكنك لصقه في تيك توك أو إنستغرام.");
-        }
-
-        function downloadPoster() {
-            html2canvas(document.getElementById("poster")).then(canvas => {
-                let link = document.createElement('a');
-                link.download = 'ad-poster.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            });
+        function copyText() {
+            const text = document.getElementById('outputBox').innerText;
+            navigator.clipboard.writeText(text);
+            alert("📋 تم نسخ النص بنجاح!");
         }
     </script>
 </body>
