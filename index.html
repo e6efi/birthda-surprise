@@ -3,297 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حائط الذكريات والرسائل السرية 💌✨</title>
+    <title>صانع الإعلانات والعروض السريعة 🛍️🚀</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0b0f19;
-            color: #f8fafc;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: #0f172a; color: #f8fafc;
+            min-height: 100vh; display: flex; justify-content: center; align-items: center;
             padding: 20px 10px;
-        }
-
-        .bg-glow {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 30%, #1e1b4b 0%, #0b0f19 90%);
-            z-index: -1;
         }
 
         .container { width: 100%; max-width: 550px; }
 
         .card {
-            background: rgba(23, 32, 54, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px); border-radius: 20px;
+            padding: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             text-align: center;
-            animation: fadeIn 0.4s ease-out;
         }
 
         h1 {
             font-size: 1.8rem;
-            background: linear-gradient(135deg, #a855f7, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
         }
 
-        p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px; line-height: 1.5; }
+        p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px; }
 
-        input, textarea {
-            width: 100%; padding: 12px 15px; border-radius: 14px;
+        input, select, textarea {
+            width: 100%; padding: 12px; border-radius: 12px;
             border: 1px solid #334155; background: #0f172a; color: #fff;
             font-size: 0.95rem; margin-bottom: 12px; outline: none; font-family: inherit;
         }
-        input:focus, textarea:focus { border-color: #ec4899; }
 
         .btn {
-            width: 100%; padding: 14px; border: none; border-radius: 14px;
+            width: 100%; padding: 14px; border: none; border-radius: 12px;
             font-size: 1rem; font-weight: bold; cursor: pointer; color: #fff;
-            background: linear-gradient(135deg, #a855f7, #ec4899);
+            background: linear-gradient(135deg, #3b82f6, #10b981);
             transition: transform 0.2s; margin-bottom: 10px;
         }
         .btn:active { transform: scale(0.98); }
 
-        .vip-btn {
-            background: linear-gradient(135deg, #eab308, #ca8a04);
-            color: #0f172a; font-weight: 800;
+        .vip-btn { background: linear-gradient(135deg, #eab308, #ca8a04); color: #000; font-weight: 800; }
+
+        /* 🎨 البوستر الإعلاني المولد */
+        .poster-preview {
+            width: 100%; height: 320px; border-radius: 16px;
+            background: linear-gradient(135deg, #1e1b4b, #311042);
+            border: 2px solid #eab308; padding: 20px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            align-items: center; margin: 15px 0; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
-        /* 🎨 شكل الرسائل الفخم والجديد */
-        .wall-grid {
-            display: flex; flex-direction: column; gap: 15px;
-            max-height: 380px; overflow-y: auto; margin: 15px 0; text-align: right;
-            padding: 5px;
-        }
-        .wall-grid::-webkit-scrollbar { width: 4px; }
-        .wall-grid::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-
-        .note-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
-            border: 1px solid rgba(236, 72, 153, 0.3);
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            position: relative;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .note-card.vip {
-            border-color: rgba(234, 179, 8, 0.6);
-            background: linear-gradient(135deg, rgba(46, 16, 101, 0.9), rgba(15, 23, 42, 0.9));
-        }
-
-        .note-header {
-            font-size: 0.8rem; color: #a855f7; margin-bottom: 8px;
-            display: flex; justify-content: space-between; align-items: center;
-            font-weight: bold;
-        }
-
-        .note-text {
-            font-size: 1rem; color: #f8fafc; line-height: 1.6;
-            white-space: pre-line; word-break: break-word;
-        }
-
-        .badge-vip { background: #eab308; color: #000; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px; font-weight: bold; }
-
-        .promo-banner {
-            margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.9rem; color: #cbd5e1;
-        }
-        .promo-link {
-            display: inline-block; margin-top: 8px; color: #ec4899;
-            text-decoration: none; font-weight: bold; cursor: pointer;
-        }
+        .poster-tag { background: #ef4444; color: #fff; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; }
+        .poster-title { font-size: 1.8rem; font-weight: 900; color: #fff; margin: 10px 0; }
+        .poster-price { font-size: 1.4rem; color: #eab308; font-weight: bold; }
+        .old-price { text-decoration: line-through; color: #94a3b8; font-size: 1rem; margin-left: 8px; }
+        .watermark { font-size: 0.75rem; color: #64748b; margin-top: 5px; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
-
     <div class="container">
+        
+        <!-- 1️⃣ شاشة إدخال بيانات العرض -->
+        <div id="formView" class="card">
+            <h1>🚀 صانع الإعلانات المباشر</h1>
+            <p>أدخل تفاصيل عرضك واحصل على نص تسويقي + بوستر جاهز للنشر بضغطة زر!</p>
 
-        <!-- 1️⃣ شاشة إنشاء الحائط -->
-        <div id="createWallView" class="card">
-            <h1>💌 حائط الذكريات السري</h1>
-            <p>اصنع حائطك الخاص ودع أصدقاءك يكتبون لك رسائل، أمنيات، أو ذكريات سرية بدون إظهار أسمائهم!</p>
-
-            <input type="text" id="wallOwner" placeholder="اسمك أو لقبك (مثلاً: حائط علي ✨)">
+            <input type="text" id="prodName" placeholder="اسم المنتج (مثلاً: عطر الملكي 🌟)">
+            <input type="text" id="newPrice" placeholder="السعر بعد الخصم (مثلاً: 15,000 د.ع)">
+            <input type="text" id="oldPrice" placeholder="السعر القديم (اختياري، مثلاً: 25,000)">
             
-            <div id="vipCodeBox" style="display: none;">
-                <input type="text" id="vipCodeInput" placeholder="🔑 أدخل كود التفعيل VIP">
-            </div>
+            <select id="offerType">
+                <option value="🔥 خصم لفترة محدودة!">خصم لفترة محدودة 🔥</option>
+                <option value="🚚 التوصيل مجاني اليوم!">توصيل مجاني 🚚</option>
+                <option value="🎁 اشترِ واحد واحصل على الثاني مجاناً!">عرض 1+1 مجاناً 🎁</option>
+            </select>
 
-            <button class="btn" onclick="buildWall('free')">✨ إنشاء حائط مجاني</button>
-            <button class="btn vip-btn" onclick="toggleVipBox()">👑 إنشاء حائط VIP (غير محدود)</button>
-            
-            <div id="buyVipText" style="display: none; margin-top: 10px;">
-                <p style="font-size: 0.85rem; color: #eab308;">لا تمتلك كوداً؟ <a href="#" id="telegramLink" target="_blank" style="color:#eab308; font-weight:bold;">اشترِ كود VIP عبر التلغرام 📲</a></p>
-            </div>
+            <input type="text" id="vipCode" placeholder="🔑 كود VIP (لتحميل البوستر بدون علامة مائية)">
+
+            <button class="btn" onclick="generateAd()">✨ توليد الإعلان والبوستر</button>
+            <button class="btn vip-btn" onclick="buyVip()">👑 شراء كود VIP عبر التلغرام</button>
         </div>
 
-        <!-- 2️⃣ شاشة نسخ الرابط -->
-        <div id="linkView" class="card" style="display: none;">
-            <h1>تم إنشاء حائطك بنجاح! 🎉</h1>
-            <p>شارك هذا الرابط مع أصدقائك أو ضعه في الـ Bio بصفحاتك ليستقبل الرسائل:</p>
-            <input type="text" id="generatedWallUrl" readonly>
-            <button class="btn" onclick="copyWallUrl()">📋 نسخ رابط الحائط</button>
-            <button class="btn" onclick="openWallAsOwner()" style="background: #334155;">👀 الانتقال لحائطي</button>
-        </div>
+        <!-- 2️⃣ شاشة العرض النتيجة والتنزيل -->
+        <div id="resultView" class="card" style="display: none;">
+            <h1>إعلانك جاهز! 🎉</h1>
+            
+            <!-- النص التسويقي -->
+            <textarea id="captionText" rows="4" readonly></textarea>
+            <button class="btn" onclick="copyCaption()" style="background: #334155;">📋 نسخ النص التسويقي</button>
 
-        <!-- 3️⃣ شاشة عرض الحائط والرسائل -->
-        <div id="wallDisplayView" class="card" style="display: none;">
-            <h1 id="displayTitle">حائط الذكريات</h1>
-            <p id="displaySub">اكتب ذكرياتك أو رسالتك بكل حرية وسرية 🤫</p>
-
-            <!-- شبكة الرسائل -->
-            <div class="wall-grid" id="notesGrid"></div>
-
-            <!-- نموذج كتابة رسالة -->
-            <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
-                <textarea id="newNoteText" rows="3" placeholder="اكتب رسالة أو ذكرى سرية هنا..."></textarea>
-                <button class="btn" onclick="postNote()">🚀 إرسال الرسالة بسريّة</button>
+            <!-- البوستر المصمم -->
+            <div id="poster" class="poster-preview">
+                <div class="poster-tag" id="pTag">خصم خاص</div>
+                <div class="poster-title" id="pTitle">اسم المنتج</div>
+                <div>
+                    <span class="poster-price" id="pNewPrice">15,000</span>
+                    <span class="old-price" id="pOldPrice"></span>
+                </div>
+                <div class="watermark" id="pWatermark">تم الإنشاء بواسطة منصة الإعلانات السريعة</div>
             </div>
 
-            <!-- شريط الترويج بدون إرسال مستخدمين لرابط خاطئ -->
-            <div class="promo-banner">
-                تريد حائطاً خاصاً بك للرسائل والذكريات؟ <br>
-                <span class="promo-link" onclick="createNewWallFromHere()">✨ اضغط هنا لإنشاء حائطك الجميل!</span>
-            </div>
+            <button class="btn" onclick="downloadPoster()">📥 تنزيل البوستر كصورة</button>
+            <button class="btn" onclick="location.reload()" style="background: #1e293b; margin-top: 5px;">🔄 إنشاء إعلان جديد</button>
         </div>
 
     </div>
 
     <script>
-        // ✅ تم إضافة يوزرك هنا تلقائياً:
         const TELEGRAM_USERNAME = "e7efi"; 
-        document.getElementById('telegramLink').href = `https://t.me/${TELEGRAM_USERNAME}?text=مرحباً،%20أريد%20شراء%20كود%20VIP%20لحائط%20الذكريات!`;
+        const VALID_VIP_CODES = ["VIP2026", "PRO2026", "SHOP100"];
 
-        // الأكواد المقبولة حالياً (تستطيع زيادة الأكواد بنفسك من هنا)
-        const VALID_VIP_CODES = ["VIP2026", "HERO99", "GOLD77", "MEMO100"];
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const wallId = urlParams.get('wall');
-        const wallName = urlParams.get('name');
-        const isVip = urlParams.get('vip') === 'true';
-
-        if (wallId) {
-            document.getElementById('createWallView').style.display = 'none';
-            document.getElementById('wallDisplayView').style.display = 'block';
-            document.getElementById('displayTitle').innerText = wallName ? `💌 ${decodeURIComponent(wallName)}` : "💌 حائط الذكريات";
-            if (isVip) {
-                document.getElementById('displayTitle').innerHTML += ' <span class="badge-vip">VIP</span>';
-            }
-            loadNotes();
+        function buyVip() {
+            window.open(`https://t.me/${TELEGRAM_USERNAME}?text=مرحباً،%20أريد%20شراء%20كود%20VIP%20لصانع%20الإعلانات!`, '_blank');
         }
 
-        function toggleVipBox() {
-            const box = document.getElementById('vipCodeBox');
-            const buyText = document.getElementById('buyVipText');
-            if (box.style.display === 'none') {
-                box.style.display = 'block';
-                buyText.style.display = 'block';
-            } else {
-                validateAndBuildVip();
-            }
-        }
+        function generateAd() {
+            const name = document.getElementById('prodName').value.trim();
+            const newPrice = document.getElementById('newPrice').value.trim();
+            const oldPrice = document.getElementById('oldPrice').value.trim();
+            const type = document.getElementById('offerType').value;
+            const code = document.getElementById('vipCode').value.trim().toUpperCase();
 
-        function validateAndBuildVip() {
-            const code = document.getElementById('vipCodeInput').value.trim().toUpperCase();
+            if (!name || !newPrice) return alert("يرجى كتابة اسم المنتج والسعر الجديد على الأقل!");
+
+            // 1. توليد النص
+            let caption = `${type}\n\n✨ ${name} ✨\n\n💰 السعر الآن: ${newPrice}`;
+            if (oldPrice) caption += ` (بدل ${oldPrice})`;
+            caption += `\n\n📦 للطلب والحجز، أرسل رسالة فورية للصفحة! 🚀\n#عروض #تسوق #خصومات`;
+
+            document.getElementById('captionText').value = caption;
+
+            // 2. توليد البوستر
+            document.getElementById('pTag').innerText = type;
+            document.getElementById('pTitle').innerText = name;
+            document.getElementById('pNewPrice').innerText = newPrice;
+            document.getElementById('pOldPrice').innerText = oldPrice ? oldPrice : '';
+
+            // فحص كود VIP لإزالة العلامة المائية
             if (VALID_VIP_CODES.includes(code)) {
-                buildWall('vip');
+                document.getElementById('pWatermark').innerText = "⭐ إعلان VIP محترف";
             } else {
-                alert("❌ كود التفعيل غير صحيح! تواصل معنا عبر التلغرام للحصول على كود خاص.");
-            }
-        }
-
-        function buildWall(type) {
-            const owner = document.getElementById('wallOwner').value.trim() || "حائط الذكريات";
-            const uniqueId = 'wall_' + Math.random().toString(36).substr(2, 9);
-            const isVipBool = (type === 'vip');
-
-            const baseUrl = window.location.origin + window.location.pathname;
-            const fullUrl = `${baseUrl}?wall=${uniqueId}&name=${encodeURIComponent(owner)}&vip=${isVipBool}`;
-
-            document.getElementById('createWallView').style.display = 'none';
-            document.getElementById('linkView').style.display = 'block';
-            document.getElementById('generatedWallUrl').value = fullUrl;
-        }
-
-        function copyWallUrl() {
-            const input = document.getElementById('generatedWallUrl');
-            input.select();
-            navigator.clipboard.writeText(input.value);
-            alert("📋 تم نسخ رابط الحائط! انشره الآن في الـ Bio أو مع أصدقائك.");
-        }
-
-        function openWallAsOwner() {
-            window.location.href = document.getElementById('generatedWallUrl').value;
-        }
-
-        function createNewWallFromHere() {
-            window.location.href = window.location.origin + window.location.pathname;
-        }
-
-        function loadNotes() {
-            const grid = document.getElementById('notesGrid');
-            grid.innerHTML = '';
-            const savedNotes = JSON.parse(localStorage.getItem('notes_' + wallId) || '[]');
-
-            if (savedNotes.length === 0) {
-                grid.innerHTML = '<p style="text-align:center; color:#64748b; padding:20px;">لا توجد رسائل بعد.. كن أول من يترك إحساساً أو ذكرى جميلة هنا! ✨</p>';
-                return;
+                document.getElementById('pWatermark').innerText = "تم الإنشاء مجاناً عبر منصتنا (اشترِ كود VIP لإزالتها)";
             }
 
-            savedNotes.forEach(note => {
-                const card = document.createElement('div');
-                card.className = `note-card ${isVip ? 'vip' : ''}`;
-                card.innerHTML = `
-                    <div class="note-header">
-                        <span>🤫 رسالة سرية</span>
-                        <span>${note.time}</span>
-                    </div>
-                    <div class="note-text">${escapeHtml(note.text)}</div>
-                `;
-                grid.appendChild(card);
+            document.getElementById('formView').style.display = 'none';
+            document.getElementById('resultView').style.display = 'block';
+        }
+
+        function copyCaption() {
+            const copyText = document.getElementById("captionText");
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value);
+            alert("📋 تم نسخ النص التسويقي بنجاح! يمكنك لصقه في تيك توك أو إنستغرام.");
+        }
+
+        function downloadPoster() {
+            html2canvas(document.getElementById("poster")).then(canvas => {
+                let link = document.createElement('a');
+                link.download = 'ad-poster.png';
+                link.href = canvas.toDataURL();
+                link.click();
             });
-        }
-
-        function postNote() {
-            const textInput = document.getElementById('newNoteText');
-            const text = textInput.value.trim();
-
-            if (!text) return alert("يرجى كتابة شيء قبل الإرسال!");
-
-            const savedNotes = JSON.parse(localStorage.getItem('notes_' + wallId) || '[]');
-
-            if (!isVip && savedNotes.length >= 5) {
-                alert("⚠️ وصل هذا الحائط للحد الأقصى للرسائل المجانية (5 رسائل). يحتاج المالك لترقية الحائط إلى VIP لفتح رسائل غير محدودة!");
-                return;
-            }
-
-            const now = new Date();
-            const timeStr = now.getHours() + ':' + (now.getMinutes()<10?'0':'') + now.getMinutes();
-
-            savedNotes.unshift({ text: text, time: timeStr });
-            localStorage.setItem('notes_' + wallId, JSON.stringify(savedNotes));
-
-            textInput.value = '';
-            loadNotes();
-        }
-
-        function escapeHtml(str) {
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
     </script>
 </body>
