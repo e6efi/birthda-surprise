@@ -15,13 +15,37 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: radial-gradient(circle, #1a0826 0%, #0d021a 100%);
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             color: #fff;
+            position: relative;
+        }
+
+        /* 🌌 خلفية السماء والنجوم المتلألئة */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.3); box-shadow: 0 0 8px #fff; }
         }
 
         .container {
@@ -57,7 +81,6 @@
             transform: scale(1.08) rotateY(10deg);
         }
 
-        /* غطاء الهدية */
         .gift-lid {
             position: absolute;
             top: -15px;
@@ -71,7 +94,6 @@
             z-index: 2;
         }
 
-        /* الأشرطة الذهبية */
         .ribbon-v {
             position: absolute;
             width: 25px;
@@ -90,7 +112,6 @@
             transform: translateY(-50%);
         }
 
-        /* انيميشن فتح غطاء الهدية */
         .gift-container.open .gift-lid {
             transform: translateY(-120px) rotate(-25deg) scale(0.8);
             opacity: 0;
@@ -104,30 +125,30 @@
         }
 
         .hint-text {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: #ffd700;
             font-weight: 600;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
             animation: pulse 1.5s infinite;
         }
 
         /* 📜 بطاقة التهنئة العصرية */
         .card {
             display: none;
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 35px 25px;
             border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
             text-align: center;
             width: 100%;
             animation: popup 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
         .card h1 {
-            font-size: 2rem;
+            font-size: 2.1rem;
             background: linear-gradient(45deg, #ff758c, #ff7eb3, #ffd700);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -137,11 +158,10 @@
         .typed-text {
             font-size: 1.15rem;
             line-height: 1.8;
-            color: #e0e0e0;
+            color: #f0f0f0;
             min-height: 120px;
         }
 
-        /* 🌸 الورود والقلوب المتساقطة */
         .floating-element {
             position: absolute;
             top: -10%;
@@ -150,7 +170,6 @@
             animation: fall linear infinite;
         }
 
-        /* التحريكات (Animations) */
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-15px) rotate(3deg); }
@@ -175,8 +194,16 @@
 </head>
 <body>
 
+    <!-- 🌌 خلفية النجوم -->
+    <div class="stars" id="starsContainer"></div>
+
+    <!-- 🎵 عنصر الصوت/الموسيقى -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-to-you-442.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="container">
-        <!-- الهدية التفاعلية -->
+        <!-- الهدية -->
         <div id="giftContainer" class="gift-container" onclick="openSurprise()">
             <div class="gift-box">
                 <div class="gift-lid">
@@ -196,12 +223,24 @@
     </div>
 
     <script>
-        // إشعار ترحيبي عند فتح الرابط
-        window.onload = function() {
-            setTimeout(() => {
-                alert("✨ أهلاً بك! توجد مفاجأة خاصة جداً أُعدّت لأجلك.. 🎁");
-            }, 500);
-        };
+        // إنشاء السماء والنجوم تلقائياً عند فتح الصفحة
+        function createStars() {
+            const starsContainer = document.getElementById('starsContainer');
+            const starCount = 80;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                starsContainer.appendChild(star);
+            }
+        }
+        createStars();
 
         const messageText = "في هذا اليوم المميز جداً، أتمنى لك سنة جديدة مليئة بالسعادة والنجاحات واللحظات الجميلة التي تشبه قلبك. 💖\n\nكل عام وأنت بألف خير وصحة وأمل! 🎆✨";
 
@@ -209,29 +248,27 @@
             const giftContainer = document.getElementById('giftContainer');
             const hint = document.getElementById('hint');
             const card = document.getElementById('card');
+            const music = document.getElementById('bgMusic');
 
-            // تشغيل أنيميشن الفتح
+            // 🎶 تشغيل الموسيقى فور الضغط
+            music.play().catch(e => console.log("Music play blocked", e));
+
+            // أنيميشن الفتح
             giftContainer.classList.add('open');
             hint.style.display = 'none';
 
-            // إظهار الكرت وإطلاق التأثيرات بعد الانتهاء من الفتح
             setTimeout(() => {
                 giftContainer.style.display = 'none';
                 card.style.display = 'block';
                 
-                // 1. إطلاق الألعاب النارية (Fireworks)
+                // التأثيرات
                 launchFireworks();
-                
-                // 2. البدء بتساقط الورود والقلوب
                 startFloatingElements();
-
-                // 3. كتابة النص حرفاً بحرف
                 typeWriter(messageText, 'typedText', 50);
 
             }, 800);
         }
 
-        // كتابة النص حرفاً بحرف
         function typeWriter(text, elementId, speed) {
             let i = 0;
             const elem = document.getElementById(elementId);
@@ -251,7 +288,6 @@
             type();
         }
 
-        // الألعاب النارية
         function launchFireworks() {
             var duration = 3 * 1000;
             var end = Date.now() + duration;
@@ -278,9 +314,8 @@
             })();
         }
 
-        // تساقط الورود والقلوب
         function startFloatingElements() {
-            const elements = ['🌸', '🌹', '💖', '✨', '🌷', '🎈'];
+            const elements = ['🌸', '🌹', '💖', '✨', '🌷', '🎈', '⭐'];
             
             setInterval(() => {
                 const el = document.createElement('div');
