@@ -3,324 +3,297 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مفاجأة خاصة جداً! 🎁✨</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <title>حائط الذكريات والرسائل السرية 💌✨</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            background: #0b0f19;
+            color: #f8fafc;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow-x: hidden;
-            color: #fff;
-            position: relative;
-            padding: 20px 0;
+            padding: 20px 10px;
         }
 
-        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-        .star { position: absolute; background: #ffffff; border-radius: 50%; animation: twinkle var(--duration) infinite ease-in-out; }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.4); box-shadow: 0 0 10px #fff; }
+        .bg-glow {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 30%, #1e1b4b 0%, #0b0f19 90%);
+            z-index: -1;
         }
 
-        .container { display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; width: 90%; max-width: 500px; }
+        .container { width: 100%; max-width: 550px; }
 
-        /* 🎁 الهدية */
-        .gift-container { perspective: 1000px; cursor: pointer; margin-bottom: 20px; }
-        .gift-box {
-            position: relative; width: 140px; height: 140px;
-            background: linear-gradient(135deg, #ff416c, #ff4b2b);
-            border-radius: 15px; box-shadow: 0 15px 35px rgba(255, 65, 108, 0.5);
-            transform-style: preserve-3d; transition: transform 0.5s ease;
-            animation: float 3s ease-in-out infinite;
-        }
-        .gift-box:hover { transform: scale(1.08) rotateY(10deg); }
-
-        .gift-lid {
-            position: absolute; top: -15px; left: -10px; width: 160px; height: 40px;
-            background: linear-gradient(135deg, #ff416c, #ff4b2b);
-            border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 2;
-        }
-
-        .ribbon-v { position: absolute; width: 25px; height: 100%; background: linear-gradient(to right, #ffd700, #fff8dc, #ffd700); left: 50%; transform: translateX(-50%); }
-        .ribbon-h { position: absolute; width: 100%; height: 25px; background: linear-gradient(to bottom, #ffd700, #fff8dc, #ffd700); top: 50%; transform: translateY(-50%); }
-
-        .gift-container.open .gift-lid { transform: translateY(-120px) rotate(-25deg) scale(0.8); opacity: 0; }
-        .gift-container.open .gift-box { animation: none; transform: scale(0); opacity: 0; transition: all 0.5s ease 0.3s; }
-
-        .hint-text { font-size: 1.15rem; color: #ffd700; font-weight: 600; text-shadow: 0 0 10px rgba(255, 215, 0, 0.6); animation: pulse 1.5s infinite; text-align: center; }
-
-        /* 🎂 الكيكة والشمعة */
-        .cake-container {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            margin-bottom: 20px;
-            animation: popup 0.8s ease forwards;
-        }
-
-        .cake {
-            font-size: 80px;
-            position: relative;
-            user-select: none;
-        }
-
-        .flame {
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 16px;
-            height: 26px;
-            background: radial-gradient(ellipse at bottom, #ffea00 0%, #ff4500 100%);
-            border-radius: 50% 50% 20% 20%;
-            box-shadow: 0 0 15px #ff4500, 0 0 25px #ffea00;
-            animation: flicker 0.1s infinite alternate;
-        }
-
-        .flame.off {
-            display: none;
-        }
-
-        @keyframes flicker {
-            0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
-            100% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
-        }
-
-        /* 📜 البطاقة والمعرض */
         .card {
-            display: none; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px 20px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-            text-align: center; width: 100%; animation: popup 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            background: rgba(23, 32, 54, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            text-align: center;
+            animation: fadeIn 0.4s ease-out;
         }
 
-        .card h1 { font-size: 2rem; background: linear-gradient(45deg, #ff758c, #ff7eb3, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; }
-        .typed-text { font-size: 1.1rem; line-height: 1.8; color: #f0f0f0; margin-bottom: 25px; }
-
-        /* 📸 ألبوم الصور التفاعلي */
-        .gallery-container {
-            margin-top: 15px;
-            position: relative;
-            width: 100%;
-            max-width: 320px;
-            margin-left: auto;
-            margin-right: auto;
+        h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
         }
 
-        .slider {
-            width: 100%;
-            height: 220px;
+        p { color: #94a3b8; font-size: 0.95rem; margin-bottom: 20px; line-height: 1.5; }
+
+        input, textarea {
+            width: 100%; padding: 12px 15px; border-radius: 14px;
+            border: 1px solid #334155; background: #0f172a; color: #fff;
+            font-size: 0.95rem; margin-bottom: 12px; outline: none; font-family: inherit;
+        }
+        input:focus, textarea:focus { border-color: #ec4899; }
+
+        .btn {
+            width: 100%; padding: 14px; border: none; border-radius: 14px;
+            font-size: 1rem; font-weight: bold; cursor: pointer; color: #fff;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            transition: transform 0.2s; margin-bottom: 10px;
+        }
+        .btn:active { transform: scale(0.98); }
+
+        .vip-btn {
+            background: linear-gradient(135deg, #eab308, #ca8a04);
+            color: #0f172a; font-weight: 800;
+        }
+
+        /* 🎨 شكل الرسائل الفخم والجديد */
+        .wall-grid {
+            display: flex; flex-direction: column; gap: 15px;
+            max-height: 380px; overflow-y: auto; margin: 15px 0; text-align: right;
+            padding: 5px;
+        }
+        .wall-grid::-webkit-scrollbar { width: 4px; }
+        .wall-grid::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+        .note-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+            border: 1px solid rgba(236, 72, 153, 0.3);
             border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            border: 2px solid rgba(255,255,255,0.2);
+            padding: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             position: relative;
+            animation: slideIn 0.3s ease-out;
         }
 
-        .slider img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-            animation: fadeIn 0.8s ease;
+        .note-card.vip {
+            border-color: rgba(234, 179, 8, 0.6);
+            background: linear-gradient(135deg, rgba(46, 16, 101, 0.9), rgba(15, 23, 42, 0.9));
         }
 
-        .slider img.active { display: block; }
-
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            font-size: 1.2rem;
-            padding: 8px 12px;
-            border-radius: 50%;
-            cursor: pointer;
-            backdrop-filter: blur(4px);
-            z-index: 5;
+        .note-header {
+            font-size: 0.8rem; color: #a855f7; margin-bottom: 8px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-weight: bold;
         }
 
-        .prev-btn { left: 8px; }
-        .next-btn { right: 8px; }
-
-        .floating-element { position: absolute; top: -10%; user-select: none; pointer-events: none; animation: fall linear infinite; }
-
-        .music-btn {
-            position: fixed; top: 15px; right: 15px; z-index: 99;
-            background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #fff; padding: 8px 15px; border-radius: 20px; cursor: pointer;
-            backdrop-filter: blur(5px); font-size: 0.9rem; display: none;
+        .note-text {
+            font-size: 1rem; color: #f8fafc; line-height: 1.6;
+            white-space: pre-line; word-break: break-word;
         }
 
-        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-15px) rotate(3deg); } }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        @keyframes popup { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        @keyframes fall { to { transform: translateY(115vh) rotate(360deg); } }
+        .badge-vip { background: #eab308; color: #000; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px; font-weight: bold; }
+
+        .promo-banner {
+            margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem; color: #cbd5e1;
+        }
+        .promo-link {
+            display: inline-block; margin-top: 8px; color: #ec4899;
+            text-decoration: none; font-weight: bold; cursor: pointer;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body>
 
-    <button id="musicToggle" class="music-btn" onclick="toggleMusic()">🎵 تشغيل/إيقاف الموسيقى</button>
-
-    <div class="stars" id="starsContainer"></div>
-
-    <audio id="bgMusic" loop playsinline preload="auto">
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=happy-birthday-112328.mp3" type="audio/mp3">
-        <source src="https://actions.google.com/sounds/v1/holidays/happy_birthday.ogg" type="audio/ogg">
-    </audio>
+    <div class="bg-glow"></div>
 
     <div class="container">
-        <!-- 🎁 الهدية -->
-        <div id="giftContainer" class="gift-container" onclick="openSurprise()">
-            <div class="gift-box">
-                <div class="gift-lid"><div class="ribbon-v"></div></div>
-                <div class="ribbon-v"></div><div class="ribbon-h"></div>
+
+        <!-- 1️⃣ شاشة إنشاء الحائط -->
+        <div id="createWallView" class="card">
+            <h1>💌 حائط الذكريات السري</h1>
+            <p>اصنع حائطك الخاص ودع أصدقاءك يكتبون لك رسائل، أمنيات، أو ذكريات سرية بدون إظهار أسمائهم!</p>
+
+            <input type="text" id="wallOwner" placeholder="اسمك أو لقبك (مثلاً: حائط علي ✨)">
+            
+            <div id="vipCodeBox" style="display: none;">
+                <input type="text" id="vipCodeInput" placeholder="🔑 أدخل كود التفعيل VIP">
+            </div>
+
+            <button class="btn" onclick="buildWall('free')">✨ إنشاء حائط مجاني</button>
+            <button class="btn vip-btn" onclick="toggleVipBox()">👑 إنشاء حائط VIP (غير محدود)</button>
+            
+            <div id="buyVipText" style="display: none; margin-top: 10px;">
+                <p style="font-size: 0.85rem; color: #eab308;">لا تمتلك كوداً؟ <a href="#" id="telegramLink" target="_blank" style="color:#eab308; font-weight:bold;">اشترِ كود VIP عبر التلغرام 📲</a></p>
             </div>
         </div>
-        <p id="hint" class="hint-text">✨ إلمس الهدية لاكتشاف المفاجأة ✨</p>
 
-        <!-- 🎂 الكيكة والتمني -->
-        <div id="cakeContainer" class="cake-container" onclick="blowCandle()">
-            <div class="cake">
-                <div id="flame" class="flame"></div>
-                🎂
-            </div>
-            <p id="cakeHint" class="hint-text" style="margin-top: 15px;">🕯️ تمنّ أمنية وإلمس الشمعة لإطفائها! 🕯️</p>
+        <!-- 2️⃣ شاشة نسخ الرابط -->
+        <div id="linkView" class="card" style="display: none;">
+            <h1>تم إنشاء حائطك بنجاح! 🎉</h1>
+            <p>شارك هذا الرابط مع أصدقائك أو ضعه في الـ Bio بصفحاتك ليستقبل الرسائل:</p>
+            <input type="text" id="generatedWallUrl" readonly>
+            <button class="btn" onclick="copyWallUrl()">📋 نسخ رابط الحائط</button>
+            <button class="btn" onclick="openWallAsOwner()" style="background: #334155;">👀 الانتقال لحائطي</button>
         </div>
 
-        <!-- 📜 البطاقة والمعرض -->
-        <div id="card" class="card">
-            <h1>🌸 عيد ميلاد سعيد! 🌸</h1>
-            <p id="typedText" class="typed-text"></p>
+        <!-- 3️⃣ شاشة عرض الحائط والرسائل -->
+        <div id="wallDisplayView" class="card" style="display: none;">
+            <h1 id="displayTitle">حائط الذكريات</h1>
+            <p id="displaySub">اكتب ذكرياتك أو رسالتك بكل حرية وسرية 🤫</p>
 
-            <!-- 📸 معرض الصور (يمكنك استبدال الروابط بصورك الخاصة) -->
-            <div class="gallery-container">
-                <div class="slider">
-                    <button class="slider-btn prev-btn" onclick="changeSlide(-1)">❮</button>
-                    <!-- يمكنك تغيير روابط الصور التالية لروابط صورك الخاصة -->
-                    <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500" class="active" alt="صورة 1">
-                    <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500" alt="صورة 2">
-                    <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=500" alt="صورة 3">
-                    <button class="slider-btn next-btn" onclick="changeSlide(1)">❯</button>
-                </div>
+            <!-- شبكة الرسائل -->
+            <div class="wall-grid" id="notesGrid"></div>
+
+            <!-- نموذج كتابة رسالة -->
+            <div style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                <textarea id="newNoteText" rows="3" placeholder="اكتب رسالة أو ذكرى سرية هنا..."></textarea>
+                <button class="btn" onclick="postNote()">🚀 إرسال الرسالة بسريّة</button>
+            </div>
+
+            <!-- شريط الترويج بدون إرسال مستخدمين لرابط خاطئ -->
+            <div class="promo-banner">
+                تريد حائطاً خاصاً بك للرسائل والذكريات؟ <br>
+                <span class="promo-link" onclick="createNewWallFromHere()">✨ اضغط هنا لإنشاء حائطك الجميل!</span>
             </div>
         </div>
+
     </div>
 
     <script>
-        function createStars() {
-            const starsContainer = document.getElementById('starsContainer');
-            for (let i = 0; i < 100; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                const size = Math.random() * 3 + 1;
-                star.style.width = size + 'px'; star.style.height = size + 'px';
-                star.style.top = Math.random() * 100 + '%'; star.style.left = Math.random() * 100 + '%';
-                star.style.setProperty('--duration', (Math.random() * 3 + 1.5) + 's');
-                starsContainer.appendChild(star);
+        // ✅ تم إضافة يوزرك هنا تلقائياً:
+        const TELEGRAM_USERNAME = "e7efi"; 
+        document.getElementById('telegramLink').href = `https://t.me/${TELEGRAM_USERNAME}?text=مرحباً،%20أريد%20شراء%20كود%20VIP%20لحائط%20الذكريات!`;
+
+        // الأكواد المقبولة حالياً (تستطيع زيادة الأكواد بنفسك من هنا)
+        const VALID_VIP_CODES = ["VIP2026", "HERO99", "GOLD77", "MEMO100"];
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const wallId = urlParams.get('wall');
+        const wallName = urlParams.get('name');
+        const isVip = urlParams.get('vip') === 'true';
+
+        if (wallId) {
+            document.getElementById('createWallView').style.display = 'none';
+            document.getElementById('wallDisplayView').style.display = 'block';
+            document.getElementById('displayTitle').innerText = wallName ? `💌 ${decodeURIComponent(wallName)}` : "💌 حائط الذكريات";
+            if (isVip) {
+                document.getElementById('displayTitle').innerHTML += ' <span class="badge-vip">VIP</span>';
+            }
+            loadNotes();
+        }
+
+        function toggleVipBox() {
+            const box = document.getElementById('vipCodeBox');
+            const buyText = document.getElementById('buyVipText');
+            if (box.style.display === 'none') {
+                box.style.display = 'block';
+                buyText.style.display = 'block';
+            } else {
+                validateAndBuildVip();
             }
         }
-        createStars();
 
-        const messageText = "في هذا اليوم المميز جداً، أتمنى لك سنة جديدة مليئة بالسعادة والنجاحات واللحظات الجميلة التي تشبه قلبك. 💖\n\nكل عام وأنت بألف خير وصحة وأمل! 🎆✨";
-
-        function openSurprise() {
-            const giftContainer = document.getElementById('giftContainer');
-            const hint = document.getElementById('hint');
-            const cakeContainer = document.getElementById('cakeContainer');
-            const music = document.getElementById('bgMusic');
-            const musicBtn = document.getElementById('musicToggle');
-
-            music.play().then(() => { musicBtn.style.display = 'block'; }).catch(e => { musicBtn.style.display = 'block'; });
-
-            giftContainer.classList.add('open');
-            hint.style.display = 'none';
-
-            setTimeout(() => {
-                giftContainer.style.display = 'none';
-                cakeContainer.style.display = 'flex';
-                launchFireworks();
-            }, 800);
-        }
-
-        // إطفاء الشمعة
-        function blowCandle() {
-            const flame = document.getElementById('flame');
-            const cakeContainer = document.getElementById('cakeContainer');
-            const card = document.getElementById('card');
-
-            flame.classList.add('off');
-            launchFireworks();
-            startFloatingElements();
-
-            setTimeout(() => {
-                cakeContainer.style.display = 'none';
-                card.style.display = 'block';
-                typeWriter(messageText, 'typedText', 50);
-            }, 1000);
-        }
-
-        // تحريك معرض الصور
-        let currentSlide = 0;
-        function changeSlide(direction) {
-            const slides = document.querySelectorAll('.slider img');
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + direction + slides.length) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }
-
-        function toggleMusic() {
-            const music = document.getElementById('bgMusic');
-            if (music.paused) { music.play(); } else { music.pause(); }
-        }
-
-        function typeWriter(text, elementId, speed) {
-            let i = 0;
-            const elem = document.getElementById(elementId);
-            elem.innerHTML = '';
-            function type() {
-                if (i < text.length) {
-                    if (text.charAt(i) === '\n') { elem.innerHTML += '<br>'; } else { elem.innerHTML += text.charAt(i); }
-                    i++; setTimeout(type, speed);
-                }
+        function validateAndBuildVip() {
+            const code = document.getElementById('vipCodeInput').value.trim().toUpperCase();
+            if (VALID_VIP_CODES.includes(code)) {
+                buildWall('vip');
+            } else {
+                alert("❌ كود التفعيل غير صحيح! تواصل معنا عبر التلغرام للحصول على كود خاص.");
             }
-            type();
         }
 
-        function launchFireworks() {
-            var duration = 2.5 * 1000; var end = Date.now() + duration;
-            (function frame() {
-                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff416c', '#ffd700', '#ffffff'] });
-                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff416c', '#ffd700', '#ffffff'] });
-                if (Date.now() < end) { requestAnimationFrame(frame); }
-            })();
+        function buildWall(type) {
+            const owner = document.getElementById('wallOwner').value.trim() || "حائط الذكريات";
+            const uniqueId = 'wall_' + Math.random().toString(36).substr(2, 9);
+            const isVipBool = (type === 'vip');
+
+            const baseUrl = window.location.origin + window.location.pathname;
+            const fullUrl = `${baseUrl}?wall=${uniqueId}&name=${encodeURIComponent(owner)}&vip=${isVipBool}`;
+
+            document.getElementById('createWallView').style.display = 'none';
+            document.getElementById('linkView').style.display = 'block';
+            document.getElementById('generatedWallUrl').value = fullUrl;
         }
 
-        function startFloatingElements() {
-            const elements = ['🌸', '🌹', '💖', '✨', '🌷', '🎈', '⭐'];
-            setInterval(() => {
-                const el = document.createElement('div');
-                el.classList.add('floating-element');
-                el.innerText = elements[Math.floor(Math.random() * elements.length)];
-                el.style.left = Math.random() * 100 + 'vw';
-                el.style.animationDuration = Math.random() * 3 + 3 + 's';
-                el.style.fontSize = Math.random() * 15 + 20 + 'px';
-                el.style.opacity = Math.random();
-                document.body.appendChild(el);
-                setTimeout(() => { el.remove(); }, 6000);
-            }, 300);
+        function copyWallUrl() {
+            const input = document.getElementById('generatedWallUrl');
+            input.select();
+            navigator.clipboard.writeText(input.value);
+            alert("📋 تم نسخ رابط الحائط! انشره الآن في الـ Bio أو مع أصدقائك.");
+        }
+
+        function openWallAsOwner() {
+            window.location.href = document.getElementById('generatedWallUrl').value;
+        }
+
+        function createNewWallFromHere() {
+            window.location.href = window.location.origin + window.location.pathname;
+        }
+
+        function loadNotes() {
+            const grid = document.getElementById('notesGrid');
+            grid.innerHTML = '';
+            const savedNotes = JSON.parse(localStorage.getItem('notes_' + wallId) || '[]');
+
+            if (savedNotes.length === 0) {
+                grid.innerHTML = '<p style="text-align:center; color:#64748b; padding:20px;">لا توجد رسائل بعد.. كن أول من يترك إحساساً أو ذكرى جميلة هنا! ✨</p>';
+                return;
+            }
+
+            savedNotes.forEach(note => {
+                const card = document.createElement('div');
+                card.className = `note-card ${isVip ? 'vip' : ''}`;
+                card.innerHTML = `
+                    <div class="note-header">
+                        <span>🤫 رسالة سرية</span>
+                        <span>${note.time}</span>
+                    </div>
+                    <div class="note-text">${escapeHtml(note.text)}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function postNote() {
+            const textInput = document.getElementById('newNoteText');
+            const text = textInput.value.trim();
+
+            if (!text) return alert("يرجى كتابة شيء قبل الإرسال!");
+
+            const savedNotes = JSON.parse(localStorage.getItem('notes_' + wallId) || '[]');
+
+            if (!isVip && savedNotes.length >= 5) {
+                alert("⚠️ وصل هذا الحائط للحد الأقصى للرسائل المجانية (5 رسائل). يحتاج المالك لترقية الحائط إلى VIP لفتح رسائل غير محدودة!");
+                return;
+            }
+
+            const now = new Date();
+            const timeStr = now.getHours() + ':' + (now.getMinutes()<10?'0':'') + now.getMinutes();
+
+            savedNotes.unshift({ text: text, time: timeStr });
+            localStorage.setItem('notes_' + wallId, JSON.stringify(savedNotes));
+
+            textInput.value = '';
+            loadNotes();
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
     </script>
 </body>
